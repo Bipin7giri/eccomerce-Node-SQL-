@@ -7,7 +7,6 @@ const register = async (req, res) => {
   const body = req.body;
 
   body.password = await bcrypt.hash(body.password, salt);
-  console.log(body);
   let query =
     'INSERT INTO user (firstname,middlename,lastname,email,password,created_at) VALUES ?';
 

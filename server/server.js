@@ -1,5 +1,5 @@
 const express = require('express');
-
+const cloudinary = require('cloudinary');
 const app = express();
 const { con } = require('./db/connect');
 let cors = require('cors');
@@ -12,9 +12,16 @@ const authRouter = require('./routes/authRoute');
 const productRouter = require('./routes/productRoute');
 const orderRouter = require('./routes/orderRoute');
 const { createTable } = require('./creatingTable/createTable');
+const { order } = require('./models/OrderModel');
 con.connect(function (err) {
   if (err) throw err;
-  console.log('Connected!');
+  console.log('Connected! to DB');
+});
+
+cloudinary.config({
+  cloud_name: 'dr54a7gze',
+  api_key: '868275163814591',
+  api_secret: 'U0-E-H34SF1Dl1vpyroUU361AUQ',
 });
 
 // creating table
@@ -27,9 +34,6 @@ app.use('/product', productRouter);
 app.use('/order', orderRouter);
 
 const port = process.env.PORT;
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

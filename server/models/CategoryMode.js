@@ -7,7 +7,6 @@ const productCategory = () => {
     for (let i = 0; i < result.length; i++) {
       data.push(JSON.parse(JSON.stringify(result[i].Tables_in_ecommerce)));
     }
-
     if (data.includes('product_category') === true) {
       return;
     } else {

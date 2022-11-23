@@ -1,40 +1,48 @@
 const { con } = require('../db/connect');
+const cloudinary = require('cloudinary');
 const addProduct = async (req, res) => {
-  const {
-    product_name,
-    product_price,
-    description,
-    image = req.file.filename,
-    tags,
-    slug,
-    stock,
-    category_id,
-  } = req.body;
-  let query =
-    'INSERT INTO product (product_name, description, product_price, image, tags, slug, stock, category_id) VALUES ?';
-
-  const productData = [
-    [
-      product_name,
-      description,
-      product_price,
-      image,
-      tags,
-      slug,
-      stock,
-      category_id,
-    ],
-  ];
-
-  con.query(query, [productData], (err, result) => {
-    if (err?.errno === 1062) {
-      res.send(err.code);
-      console.log(err);
-    } else {
+  await cloudinary.uploader
+    .upload(req.file.path, (result) => {
+      // This will return the output after the code is exercuted both in the terminal and web browser
+      // When successful, the output will consist of the metadata of the uploaded file one after the other. These include the name, type, size and many more.
       console.log(result);
-      res.send('added to db');
-    }
-  });
+    })
+    .then(async (result) => {
+      const {
+        product_name,
+        product_price,
+        description,
+        image = result.secure_url,
+        tags,
+        slug,
+        stock,
+        category_id,
+      } = req.body;
+      let query =
+        'INSERT INTO product (product_name, description, product_price, image, tags, slug, stock, category_id) VALUES ?';
+
+      const productData = [
+        [
+          product_name,
+          description,
+          product_price,
+          image,
+          tags,
+          slug,
+          stock,
+          category_id,
+        ],
+      ];
+      con.query(query, [productData], (err, result) => {
+        if (err?.errno === 1062) {
+          res.send(err.code);
+          console.log(err);
+        } else {
+          console.log(result);
+          res.send('added to db');
+        }
+      });
+    });
 };
 
 const getProduct = async (req, res) => {
@@ -58,8 +66,6 @@ const editProduct = async (req, res) => {
     stock,
     category_id,
   } = req.body;
-  console.log(id);
-
   var query =
     'UPDATE product SET product_name = ?, description =?,  product_price =?, image=?, tags=?, slug=?, stock=?, category_id=? WHERE id=?';
 
@@ -84,7 +90,7 @@ const editProduct = async (req, res) => {
       }
       console.log(data);
       return res.json('updated');
-    }
+    },
   );
 };
 

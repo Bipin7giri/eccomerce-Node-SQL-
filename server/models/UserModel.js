@@ -2,7 +2,6 @@ const { con } = require('../db/connect');
 
 const user = () => {
   const s = 'SHOW FULL TABLES';
-
   con.query(s, (err, result) => {
     let data = [];
     for (let i = 0; i < result.length; i++) {
@@ -19,7 +18,6 @@ const user = () => {
         }
       });
     }
-    console.log(data.includes('user'));
   });
 };
 module.exports = {
