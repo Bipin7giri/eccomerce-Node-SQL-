@@ -4,7 +4,7 @@ import KhaltiCheckout from 'khalti-checkout-web';
 import apiClient from '../api/index';
 let config = {
   // replace this key with yours
-  publicKey: '',
+  publicKey: 'test_public_key_86b647c1a4004b5db9321a90a93e9074',
   productIdentity: '1234567',
   productName: 'Multishop',
   productUrl: 'http://127.0.0.1:3000',

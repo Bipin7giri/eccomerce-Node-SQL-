@@ -6,22 +6,67 @@ import { useSelector, useDispatch } from 'react-redux';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { cartAction } from '../redux/slice/cartSlice';
-import config from '../khalti/khaltiConfig';
+// import config from '../khalti/khaltiConfig';
 import { useNavigate } from 'react-router-dom';
 import { Button, notification } from 'antd';
-
+import apiClient from '../api/index';
 const Cart = () => {
-  let checkout = new KhaltiCheckout(config);
+  const { cart } = useSelector((state) => state.carts);
+  const [cartItem, setCartItem] = useState();
+  useEffect(() => {
+    setCartItem(cart)
+    console.log(cart)
+  },[cart])
+
   const dispatch = useDispatch();
   const nagvigate = useNavigate();
   const { isLoggedIn } = useSelector((state) => state.user);
+  const { id } = useSelector((state) => state.user.user)
+  console.log(id)
+  let config = {
+    // replace this key with yours
+    publicKey: 'test_public_key_86b647c1a4004b5db9321a90a93e9074',
+    productIdentity: '1234567',
+    productName: 'Multishop',
+    productUrl: 'http://127.0.0.1:3000',
+    eventHandler: {
+       onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        console.log(payload);
+    
+        const { idx } = payload;
+    
+        const res = apiClient.post('/order/addOrder', {cart:cart,payment_id:idx,user_id:id});
+        if (res) {
+          console.log(res.data);
+        }
+      },
+      // onError handler is optional
+      onError(error) {
+        // handle errors
+        console.log(error);
+      },
+      onClose() {
+        console.log('widget is closing');
+      },
+    },
+    paymentPreference: [
+      'KHALTI',
+      'EBANKING',
+      'MOBILE_BANKING',
+      'CONNECT_IPS',
+      'SCT',
+    ],
+  };
+  let checkout = new KhaltiCheckout(config);
+
   const openNotification = () => {
     notification.open({
       message: 'Error',
       description: 'Nothing in the carts',
     });
   };
-  const { cart } = useSelector((state) => state.carts);
+ 
   let price = cart?.map((item) => {
     return item.product_price;
   });

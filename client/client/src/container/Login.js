@@ -14,8 +14,9 @@ const Login = () => {
   const nagvigate = useNavigate();
   const onFinish = async (values) => {
     const res = await apiClient.post(`auth/login`, values);
-    if (res.data === 'matched') {
-      dispatch(userAction.signIn(values));
+    console.log(res.data);
+    if (res.data.status === 'matched') {
+      dispatch(userAction.signIn(res.data.usersDetails));
       nagvigate('/cart');
     }
     console.log('Success:', values);
