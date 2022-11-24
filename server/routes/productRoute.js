@@ -30,6 +30,7 @@ const {
   getProduct,
   editProduct,
   deleteProduct,
+  getProductById,
 } = require('../controller/product');
 const express = require('express');
 const router = express.Router();
@@ -40,5 +41,6 @@ router.get('/allProduct', getProduct);
 router.put('/editProduct/:id', upload.single('image'), editProduct);
 router.get('/getallproduct', getAllCateogry);
 router.delete('/deleteProduct/:id', deleteProduct);
+router.get('/getproduct/:id', getProductById);
 
 module.exports = router;

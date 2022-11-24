@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 const authRouter = require('./routes/authRoute');
 const productRouter = require('./routes/productRoute');
 const orderRouter = require('./routes/orderRoute');
+const paymentRouter = require('./routes/paymentRoute');
 const { createTable } = require('./creatingTable/createTable');
 const { order } = require('./models/OrderModel');
 con.connect(function (err) {
@@ -30,9 +31,8 @@ createTable();
 // routes
 app.use('/auth', authRouter);
 app.use('/product', productRouter);
-
 app.use('/order', orderRouter);
-
+app.use('/', paymentRouter);
 const port = process.env.PORT;
 
 app.listen(port, () => {

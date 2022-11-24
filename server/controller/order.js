@@ -1,23 +1,35 @@
 const { con } = require('../db/connect');
 const addOrder = async (req, res) => {
-  const length = req.body.length;
+
+  const length = req.body.cart.length;
+  const { user_id } = req.body;
+  const { payment_id } = req.body;
+
   let product_id = [];
   let paid_amount = [];
+
   for (let i = 0; i < length; i++) {
-    product_id.push(req.body[i].id);
-    paid_amount.push(req.body[i].product_price);
+    product_id.push(req.body.cart[i].id);
+    paid_amount.push(req.body.cart[i].product_price);
   }
+
   let values = [];
   for (let i = 0; i < length; i++) {
     values.push([]);
   }
 
   for (let i = 0; i < length; i++) {
-    values[i].push('esewa', paid_amount[i], 1, product_id[i]);
+    values[i].push(
+      payment_id,
+      'khalti',
+      paid_amount[i],
+      user_id,
+      product_id[i],
+    );
   }
 
   let query =
-    'INSERT INTO orders (payment_by, paid_amount, user_id, product_id) VALUES ?';
+    'INSERT INTO orders ( payment_id, payment_by, paid_amount, user_id, product_id) VALUES ?';
   con.query(query, [values], function (err) {
     if (err) throw err;
   });

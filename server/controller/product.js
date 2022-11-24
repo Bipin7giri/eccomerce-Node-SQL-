@@ -54,6 +54,15 @@ const getProduct = async (req, res) => {
   });
 };
 
+const getProductById = async (req, res) => {
+  let query =
+    'SELECT * FROM product INNER JOIN product_category as c ON product.category_id=c.c_id WHERE product.id = ?';
+  con.query(query, req.params.id, function (err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+
 const editProduct = async (req, res) => {
   const { id } = req.params;
   const {
@@ -109,4 +118,5 @@ module.exports = {
   getProduct,
   editProduct,
   deleteProduct,
+  getProductById,
 };

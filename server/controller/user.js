@@ -34,16 +34,20 @@ const login = (req, res, next) => {
   const email = req.body.email;
   const userPassword = req.body.password;
   // const password =
-  let query = 'SELECT password FROM user WHERE email = ' + con.escape(email);
+  let query = 'SELECT * FROM user WHERE email = ' + con.escape(email);
   con.query(query, function (err, result) {
     if (result.length > 0) {
+      const all = JSON.parse(JSON.stringify(result[0]));
       const { password } = JSON.parse(JSON.stringify(result[0]));
       bcrypt.compare(userPassword, password, function (err, status) {
         if (status === true) {
-          res.send('matched');
+          res.json({
+            usersDetails: all,
+            status: 'matched',
+          });
           next();
         } else {
-          res.send('incorrect ');
+          res.send('incorrect');
         }
       });
     } else {
