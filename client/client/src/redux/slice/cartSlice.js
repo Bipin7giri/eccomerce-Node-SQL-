@@ -23,6 +23,9 @@ const cartSlice = createSlice({
       });
       state.cart = newArr;
     },
+    removeAll(state) {
+      state.cart = [];
+    },
   },
 });
 export { cartSlice };

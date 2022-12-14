@@ -11,7 +11,7 @@ const productCategory = () => {
       return;
     } else {
       let sql =
-        'CREATE TABLE product_category(c_id int AUTO_INCREMENT, name VARCHAR(250) NOT NULL, description VARCHAR(400), created_at TIMESTAMP, PRIMARY KEY(c_id) )';
+        'CREATE TABLE product_category(c_id int AUTO_INCREMENT, name VARCHAR(250) NOT NULL, c_description VARCHAR(400), created_at TIMESTAMP, PRIMARY KEY(c_id) )';
       con.query(sql, (err) => {
         if (err) {
           throw err;

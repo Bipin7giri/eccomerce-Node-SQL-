@@ -3,7 +3,7 @@ const addCateogry = async (req, res) => {
   const { name } = req.body;
   const { description } = req.body;
 
-  let query = 'INSERT INTO product_category (name,description) VALUES ?';
+  let query = 'INSERT INTO product_category (name,c_description) VALUES ?';
 
   const userData = [[name, description]];
   await con.query(query, [userData], (err, result) => {

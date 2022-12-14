@@ -48,7 +48,7 @@ const addOrder = async (req, res) => {
 const getOrder = async (req, res) => {
   const email = req.params.email;
   let query =
-    'SELECT orders.id, orders.payment_by, orders.paid_amount, orders.created_AT, p.product_name, p.image, u.firstname, u.lastname FROM orders INNER JOIN user as u ON orders.user_id = u.id INNER JOIN product as p ON orders.product_id = p.id WHERE u.email =' +
+    'SELECT orders.id, orders.payment_id, orders.payment_by, orders.paid_amount, orders.created_AT, p.product_name, p.image, u.firstname, u.lastname FROM orders INNER JOIN user as u ON orders.user_id = u.id INNER JOIN product as p ON orders.product_id = p.id WHERE u.email =' +
     con.escape(email);
   con.query(query, function (err, result) {
     if (err) throw err;

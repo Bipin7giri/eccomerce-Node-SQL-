@@ -12,12 +12,13 @@ import { Dropdown, Menu } from 'antd';
 import { userAction } from '../redux/slice/authSlice';
 const Navbar = () => {
   const dispatch = useDispatch();
+  const { firstname, lastname } = useSelector((state) => state.user.user);
   const menu = (
     <Menu
       items={[
         {
           key: '1',
-          label: <Link to={'/'}>Profile</Link>,
+          label: <Link to={'/history'}>Profile</Link>,
         },
         {
           key: '2',
@@ -131,28 +132,7 @@ const Navbar = () => {
       <div class='container-fluid'>
         <div class='row bg-secondary py-1 px-xl-5'>
           <div class='col-lg-6 d-none d-lg-block'>
-            <div class='d-inline-flex align-items-center h-100'>
-              <a
-                class='text-body mr-3'
-                href=''>
-                About
-              </a>
-              <a
-                class='text-body mr-3'
-                href=''>
-                Contact
-              </a>
-              <a
-                class='text-body mr-3'
-                href=''>
-                Help
-              </a>
-              <a
-                class='text-body mr-3'
-                href=''>
-                FAQs
-              </a>
-            </div>
+            <div class='d-inline-flex align-items-center h-100'></div>
           </div>
           <div class='col-lg-6 text-center text-lg-right'>
             {isLoggedIn && (
@@ -165,7 +145,7 @@ const Navbar = () => {
                           type='button'
                           class='btn btn-sm btn-light dropdown-toggle'
                           data-toggle='dropdown'>
-                          My Account
+                          {firstname + lastname}
                         </button>
                       </Space>
                     </a>
@@ -359,12 +339,15 @@ const Navbar = () => {
                     class='nav-item nav-link '>
                     Home
                   </Link>
-                  <Link
-                    to={'/history'}
-                    class='nav-item nav-link '>
-                    Profile
-                  </Link>
-                  {!isLoggedIn && (
+                  {isLoggedIn === true && (
+                    <Link
+                      to={'/history'}
+                      class='nav-item nav-link '>
+                      Profile
+                    </Link>
+                  )}
+
+                  {isLoggedIn === false && (
                     <>
                       <Link
                         to={'/login'}

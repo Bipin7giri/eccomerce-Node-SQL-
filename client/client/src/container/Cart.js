@@ -38,6 +38,9 @@ const Cart = () => {
     
         const res = apiClient.post('/order/addOrder', {cart:cart,payment_id:idx,user_id:id});
         if (res) {
+
+          dispatch(cartAction.removeAll());
+          nagvigate('/history');
           console.log(res.data);
         }
       },

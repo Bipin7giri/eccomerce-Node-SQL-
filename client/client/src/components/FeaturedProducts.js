@@ -36,7 +36,7 @@ const FeaturedProducts = () => {
                     <div style={{ width: '400px', height: '450px' }}>
                       <img
                         class='img-fluid w-100'
-                        style={{ width: '100%', height: '100%' }}
+                        // style={{ width: '100%', height: '100%' }}
                         src={item.image}
                         alt=''
                       />

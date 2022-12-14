@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { productAction } from '../store/slice/productSlice';
 import EditProduct from '../container/EditProduct';
+import Order from '../container/Orders';
 const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -147,7 +148,7 @@ const Home = () => {
           ></Route>
           <Route
             path='/orders'
-            element={<Sales />}
+            element={<Order />}
           ></Route>
           <Route
             path='/feedback'
