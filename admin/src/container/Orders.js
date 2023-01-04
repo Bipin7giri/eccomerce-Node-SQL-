@@ -9,11 +9,11 @@ const Order = () => {
 
   useEffect(() => {
     axios
-      .get('http://127.0.0.1:3000/order/orderlist/bipin2@gmail.com')
+      .get('http://127.0.0.1:5000/order/allOrder/')
       .then((res) => {
         setOrders(res.data);
       });
-  });
+  },[]);
   return (
     <div class='grid  place-items-center mt-16 '>
       <div class='lg:w-[1000px] sm:mr-0 mr:0 lg:mr-40  sm:w-[200px] sm:overflow-x-auto overflow-x-auto mx-auto'>

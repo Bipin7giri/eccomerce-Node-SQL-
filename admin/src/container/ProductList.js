@@ -8,7 +8,13 @@ const ProductList = () => {
   const { product } = useSelector((state) => state);
   const allProduct = product.product;
   console.log(allProduct);
+  const handleDelete= (id)=>{
+    axios.delete('http://127.0.0.1:5000/product/deleteProduct/'+id).then((res)=>{
+      window.location.reload(false);
+    })
+  }
   return (
+    <div class='h-full ml-14 mt-14 mb-10 md:ml-64'>
     <div class='w-full flex items-center justify-center mb-8 overflow-hidden rounded-lg shadow-xs'>
       <div class='grid  place-items-center mt-16 '>
         <div class='lg:w-[1000px] sm:mr-0 mr:0 lg:mr-40  sm:w-[200px] sm:overflow-x-auto overflow-x-auto mx-auto'>
@@ -74,9 +80,13 @@ const ProductList = () => {
                       </Link>
                     </td>
                     <td class='px-4 py-3 text-xs'>
-                      <span class='px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100'>
-                        EDIT
-                      </span>
+                      <button
+                      onClick={(e)=>{
+                        handleDelete(item.id)
+                      }}
+                       class='px-2 py-1 font-semibold leading-tight text-green-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100'>
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 );
@@ -85,6 +95,7 @@ const ProductList = () => {
           </table>
         </div>
       </div>
+    </div>
     </div>
   );
 };

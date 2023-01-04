@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { json, useParams } from 'react-router-dom';
 import { useRef } from 'react';
 import { productAction } from '../store/slice/productSlice';
 const EditProduct = () => {
@@ -12,28 +12,28 @@ const EditProduct = () => {
 
   const dispatch = useDispatch();
 
-  const productByID = allProduct?.filter((item) => {
-    if (item._id === id) {
-      return item;
-    }
-  });
+
+  const [productDetail, setProductDetail] = useState([]);
   const [category, setCatgrory] = useState([]);
+  console.log(productDetail)
   useEffect(() => {
-    axios.get('http://127.0.0.1:3000/product/getallproduct').then((res) => {
-      setCatgrory(res.data);
-      console.log(category);
+    axios.get('http://127.0.0.1:5000/product/getproduct/'+id).then((res) => {
+      setProductDetail(res.data);
     });
+    axios.get('http://127.0.0.1:5000/product/getallcategory').then((res)=>{
+      setCatgrory(res.data)
+    })
   }, []);
 
   const [productDetails, setProductDetails] = useState({
-    product_name: '',
-    description: '',
-    product_price: '',
-    image: '',
-    tags: '',
-    slug: '',
-    stock: '',
-    category_id: '',
+    product_name: productDetail.product_name,
+    description: productDetail.description,
+    product_price: productDetail.product_price,
+    image: productDetail.image,
+    tags: productDetail.tags,
+    slug: productDetail.slug,
+    stock: productDetail.stock,
+    category_id: productDetail.category_id,
   });
 
   const formData = new FormData();
@@ -57,8 +57,9 @@ const EditProduct = () => {
 
   return (
     <div class='grid  place-items-center mt-16 '>
+      {JSON.stringify(productDetail)}
       <div class='w-11/12 px-6 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12'>
-        <div
+        <form
           encType='multipart/form-data'
           class='mt-6'
         >
@@ -70,8 +71,9 @@ const EditProduct = () => {
               >
                 Name
               </label>
-
+       {productDetail.description}
               <input
+              value={productDetail.name}
                 onKeyUp={(e) => {
                   setProductDetails({
                     ...productDetails,
@@ -80,9 +82,9 @@ const EditProduct = () => {
                 }}
                 id='name'
                 type='text'
-                name='name'
-                placeholder='Samsung'
-                autocomplete='given-name'
+                // name='name'
+                // placeholder='Samsung'
+                // autocomplete='given-name'
                 class='block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner'
                 required
               />
@@ -265,7 +267,7 @@ const EditProduct = () => {
             Add product
           </button>
           <p class='flex justify-between inline-block mt-4 text-xs text-gray-500 cursor-pointer hover:text-black'></p>
-        </div>
+        </form>
       </div>
     </div>
   );

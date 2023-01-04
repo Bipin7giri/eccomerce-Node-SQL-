@@ -15,7 +15,7 @@ const AddProducts = () => {
   });
   const [category, setCatgrory] = useState([]);
   useEffect(() => {
-    axios.get('http://127.0.0.1:3000/product/getallproduct').then((res) => {
+    axios.get('http://127.0.0.1:5000/product/getallproduct').then((res) => {
       setCatgrory(res.data);
       console.log(category);
     });
@@ -34,7 +34,7 @@ const AddProducts = () => {
   const saveToDB = () => {
     console.log(productDetails);
     axios
-      .post('http://127.0.0.1:3000/product/addproduct', formData, {
+      .post('http://127.0.0.1:5000/product/addproduct', formData, {
         withCredentials: false,
       })
       .then((res) => {

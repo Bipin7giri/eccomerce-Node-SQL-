@@ -15,7 +15,7 @@ import Order from '../container/Orders';
 const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    axios.get('http://127.0.0.1:3000/product/allproduct').then((res) => {
+    axios.get('http://127.0.0.1:5000/product/allproduct').then((res) => {
       console.log(res.data);
       dispatch(productAction.saveProduct(res.data));
     });
