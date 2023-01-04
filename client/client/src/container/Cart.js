@@ -12,6 +12,7 @@ import { Button, notification } from 'antd';
 import apiClient from '../api/index';
 const Cart = () => {
   const { cart } = useSelector((state) => state.carts);
+  console.log(cart)
   const [cartItem, setCartItem] = useState();
   useEffect(() => {
     setCartItem(cart)
@@ -107,7 +108,7 @@ const Cart = () => {
                     <tr>
                       <td class='align-middle'>
                         <img
-                          src='img/product-1.jpg'
+                          src={item?.image}
                           alt=''
                           style={{ width: '50px' }}
                         />{' '}
@@ -162,7 +163,7 @@ const Cart = () => {
               <div class='border-bottom pb-2'>
                 <div class='d-flex justify-content-between mb-3'>
                   <h6>Subtotal</h6>
-                  <h6> {!total ? 0 : total}</h6>
+                  <h6> {total}</h6>
                 </div>
                 <div class='d-flex justify-content-between'>
                   <h6 class='font-weight-medium'>Shipping</h6>
@@ -170,10 +171,10 @@ const Cart = () => {
                 </div>
               </div>
               <div class='pt-2'>
-                <div class='d-flex justify-content-between mt-2'>
+                {/* <div class='d-flex justify-content-between mt-2'>
                   <h5>Total</h5>
                   <h5>{total}</h5>
-                </div>
+                </div> */}
                 <button
                   onClick={payVIAKhalti}
                   class='btn btn-block btn-primary font-weight-bold my-3 py-3'>

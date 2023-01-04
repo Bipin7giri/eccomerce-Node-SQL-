@@ -6,12 +6,29 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import apiClient from '../api/index';
+import {notification } from 'antd';
+import { useNavigate } from 'react-router-dom';
+const openNotification = (data) => {
+  notification.open({
+    message: data,
+    description:
+      data,
+    onClick: () => {
+      console.log('Notification Clicked!');
+    },
+  });
+};
 const Register = () => {
+  const nagvigate = useNavigate();
   const onFinish = async (values) => {
     const res = await apiClient.post(`auth/register`, values);
-    if (res) {
-      console.log(res);
+    if (res.data ==="ER_DUP_ENTRY") {
+      openNotification("Duplicate Email")
     }
+    else{
+      nagvigate('/');
+    }
+  
     console.log('Success:', values);
   };
   const onFinishFailed = (errorInfo) => {

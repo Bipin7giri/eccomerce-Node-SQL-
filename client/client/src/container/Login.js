@@ -1,14 +1,24 @@
 /** @format */
 
 import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button,notification, Checkbox, Form, Input } from 'antd';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import apiClient from '../api/index';
 import { userAction } from '../redux/slice/authSlice';
 import { useNavigate } from 'react-router-dom';
-
+// import { Button, notification, Space } from 'antd';
+const openNotification = (data) => {
+  notification.open({
+    message: data,
+    description:
+      data,
+    onClick: () => {
+      console.log('Notification Clicked!');
+    },
+  });
+};
 const Login = () => {
   const dispatch = useDispatch();
   const nagvigate = useNavigate();
@@ -18,6 +28,13 @@ const Login = () => {
     if (res.data.status === 'matched') {
       dispatch(userAction.signIn(res.data.usersDetails));
       nagvigate('/cart');
+    }
+    else if(res.data === "no email found"){
+      openNotification("no email found")
+    }
+    else if(res.data === "incorrect"){
+      openNotification("Incorrect Password")
+      
     }
     console.log('Success:', values);
     console.log('Success:', values);
