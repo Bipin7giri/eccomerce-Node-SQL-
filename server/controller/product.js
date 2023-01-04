@@ -63,6 +63,7 @@ const getProductById = async (req, res) => {
   });
 };
 
+
 const editProduct = async (req, res) => {
   const { id } = req.params;
   const {
@@ -109,7 +110,7 @@ const deleteProduct = async (req, res) => {
   let query = 'DELETE FROM product WHERE id = ?';
   await con.query(query, id, function (err, result) {
     if (err) return res.status(500).json(err);
-    return res.json('delete');
+    return res.json('deleted');
   });
 };
 

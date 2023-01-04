@@ -33,8 +33,8 @@ app.use('/auth', authRouter);
 app.use('/product', productRouter);
 app.use('/order', orderRouter);
 app.use('/', paymentRouter);
-const port = process.env.PORT;
-
+// const port = process.env.PORT;
+ const port = 5000;
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

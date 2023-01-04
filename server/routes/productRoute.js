@@ -39,7 +39,7 @@ router.post('/addCategory', addCateogry);
 router.post('/addProduct', upload.single('image'), addProduct);
 router.get('/allProduct', getProduct);
 router.put('/editProduct/:id', upload.single('image'), editProduct);
-router.get('/getallproduct', getAllCateogry);
+router.get('/getallcategory', getAllCateogry);
 router.delete('/deleteProduct/:id', deleteProduct);
 router.get('/getproduct/:id', getProductById);
 

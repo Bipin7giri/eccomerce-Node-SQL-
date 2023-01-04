@@ -55,8 +55,18 @@ const getOrder = async (req, res) => {
     res.json(result);
   });
 };
+const getAllOrder = async (req, res) => {
+  let query ='SELECT orders.id, orders.payment_id, orders.payment_by, orders.paid_amount, orders.created_AT, p.product_name, p.image, u.firstname, u.lastname FROM orders INNER JOIN user as u ON orders.user_id = u.id INNER JOIN product as p ON orders.product_id = p.id';
+  con.query(query, function (err, result) {
+    if (err) throw err;
+    console.log(result)
+    res.json(result);
+  });
+};
+
 
 module.exports = {
   addOrder,
   getOrder,
+  getAllOrder
 };
